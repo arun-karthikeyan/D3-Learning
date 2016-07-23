@@ -27,9 +27,9 @@
     });
 
     function updateData(){
-      // numbers[3] = 60;
-      // numbers.push(65);
+      numbers[3] = 60;
       numbers.splice(numbers.length-1,1);
+      numbers.push(65);
       var bars = d3.select('#chart')
         .selectAll('.bar')
         .data(numbers)
