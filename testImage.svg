@@ -1,0 +1,12 @@
+<svg height="100%" width="100%">
+  <g>
+  <rect x="0" y="0" width="500px" height="50px" />
+  <text x="175px" y="25px" fill="white">I'm an svg rectangle</text>
+  </g>
+
+  <g>
+  <circle cx="250px" cy="150px" r="100px" fill="black"/>
+  <text x="185px" y="150px" fill="white">I'm an svg circle</text>
+  </g>
+
+</svg>
