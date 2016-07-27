@@ -1,0 +1,31 @@
+#chartArea {
+  border: 2px dashed #555;
+  width: 1200px;
+  height: 900px;
+}
+svg .node{
+  stroke: #fff;
+  stroke-width: 2px
+  stroke-opacity: .3;
+}
+svg .link{
+  stroke: #555;
+  stroke-width: 2px;
+  stroke-opacity: .3;
+}
+svg .node-active {
+  stroke: #555;
+  stroke-width: 2px;
+  stroke-opacity: 1;
+}
+svg .link-active{
+  stroke: #555;
+  stroke-width: 2px;
+  stroke-opacity: 1;
+}
+
+svg .oracle{
+  stroke: #999999;
+  stroke-width: 2px;
+  stroke-opacity: 1;
+}
