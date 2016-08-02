@@ -1810,48 +1810,112 @@ nodes.on('mouseout', function() {
             return g10(d.class - 1);
         });
 });
-
-
-/*iteration 2 transitions */
-setTimeout(function() {
-    console.log('triggered iteration 2');
-    var graph2 = getGraph2();
-    for (var i = 0; i < graph2.nodes.length; ++i) {
-        if (graph.nodes[i].class != graph2.nodes[i].class) {
-            graph.nodes[i].class = graph2.nodes[i].class;
-            graph.nodes[i].mod = true;
-            // console.log('index : '+i+" set");
-        }
+/**
+    REMOVE EDGES CODE
+**/
+setTimeout(function(){
+  console.log('triggered test');
+  var graph2 = getGraph2();
+  var edgesToRemove = {};
+  graph.links.forEach(function(d,i){
+    edgesToRemove[d.id] = i;
+  });
+  graph2.links.forEach(function(d){
+    if(graph.links[edgesToRemove[d.id]]!=undefined){
+      graph.links[edgesToRemove[d.id]].mod = true;
     }
+  }); //after this all edges that still have mod = false have to get removed
+  links.filter(function(d){
+    return !d.mod;
+  })
+  .classed('link-active', true)
+  .transition()
+  .duration(transitionDuration)
+  .style('opacity', 0) // should the links be removed here itself ??
+  .each('end', function(d){
+    linkIndex[d.source.id + '-' + d.target.id] = false;
+  });
 
-    nodes = nodes.data(graph.nodes, function(d) {
-        return d.id;
+  setTimeout(function(){
+    force.links(graph2.links, function(d){
+      return d.id;
     });
-
-    nodes.filter(function(d){
-          return d.mod;
-        })
-        .classed('node-active', true)
-        .transition()
-        .duration(transitionDuration)
-        .attr('r',radius+5)
-        .transition()
-        .duration(transitionDuration)
-        .style('fill', function(d) {
-            return g10(d.class - 1);
-        })
-        .transition()
-        .duration(transitionDuration)
-        .attr('r', radius)
-        .each('end', function(d) {
-            d3.select(this)
-            .classed('node-active', false)
-            .attr('mod', false);
-            // console.log('index : '+d.index+" unset");
-            graph.nodes[d.index].mod = false;
-        });
-
-        force.start();
-        console.log('force start done');
+    force.start();
+    links = links.data(graph2.links, function(d){
+      return d.id;
+    });
+  },transitionDuration);
 
 }, 2000);
+/*iteration 2 transitions */
+// setTimeout(function() {
+//     console.log('triggered iteration 2');
+//     var graph2 = getGraph2();
+//     for (var i = 0; i < graph2.nodes.length; ++i) {
+//         if (graph.nodes[i].class != graph2.nodes[i].class) {
+//             graph.nodes[i].class = graph2.nodes[i].class;
+//             graph.nodes[i].mod = true;
+//         }
+//     }
+//     console.log('old links length : ' + graph.links.length);
+//     console.log('new links length : ' + graph2.links.length);
+//     nodes = nodes.data(graph.nodes, function(d) {
+//         return d.id;
+//     });
+//
+//     // force.nodes(graph.nodes, function(d) {
+//     //     return d.id;
+//     // });
+//     // force.start();
+//
+//     nodes.filter(function(d) {
+//             return d.mod;
+//         })
+//         .classed('node-active', true)
+//         .transition()
+//         .duration(transitionDuration)
+//         .attr('r', radius + 5)
+//         .transition()
+//         .duration(transitionDuration)
+//         .style('fill', function(d) {
+//             return g10(d.class - 1);
+//         })
+//         .transition()
+//         .duration(transitionDuration)
+//         .attr('r', radius)
+//         .each('end', function(d) {
+//             d3.select(this)
+//                 .classed('node-active', false)
+//                 .attr('mod', false);
+//             graph.nodes[d.index].mod = false;
+//         });
+//     //
+//     force.links(graph2.links, function(d) {
+//       return d.id;
+//     });
+//     // force.start();
+//
+//     links = links.data(graph2.links, function(d) {
+//         return d.id;
+//     });
+//
+//     //old edges removed
+//     // var linksExitSelection = links.exit();
+//     // console.log("links exit selection : " + linksExitSelection[0].length);
+//     // linksExitSelection
+//     //     .classed('link-active', true)
+//     //     .transition()
+//     //     .duration(transitionDuration*5)
+//     //     .attr('stroke-width', '5px')
+//     //     .each('end', function(d) {
+//     //         linkIndex[d.source.id + '-' + d.target.id] = false;
+//     //         d3.select(this).remove();
+//     //     });
+//
+//     //new edges added
+//     var linksEnterSelection = links.enter();
+//     console.log("links enter selection : " + linksEnterSelection[0].length);
+//     linksEnterSelection.insert('line', '.node')
+//         .attr('class', 'link');
+//
+// }, 2000);
