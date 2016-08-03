@@ -4481,6 +4481,9 @@ setTimeout(function() {
           d3.select(this).classed('link');
         });
 
+        //removing already transitioned to opacity 0 edges
+        links.exit().remove();
+
     }, 2*transitionDuration);
 
     //animation of node class updates
