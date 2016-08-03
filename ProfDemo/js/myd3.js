@@ -4249,7 +4249,9 @@ function getOracleNodeAndLabels5() {
     return oracleData;
 }
 
-
+/**
+  Generic Force Layout code and Initial Code for base iteration
+**/
 var graph = getGraph();
 var width = 1200;
 var height = 900;
@@ -4378,7 +4380,7 @@ nodes.on('mouseout', function() {
             return g10(d.class - 1);
         });
 });
-
+//Animation Code start, can be iterated or recursed to support all timestamps
 /**
   Oracle Selection and Labelling code for Iteration 1
 
@@ -4400,7 +4402,7 @@ setTimeout(function() {
         .attr('r', radius + 5)
         .transition()
         .duration(transitionDuration)
-        .style('fill', '#ffffff')
+        .style('fill', '#555')
         .transition()
         .duration(transitionDuration)
         .style('fill', function(d) {
@@ -4454,7 +4456,32 @@ setTimeout(function() {
         links = links.data(graph2.links, function(d) {
             return d.id;
         });
-    }, transitionDuration);
+
+        //adding code to transition new edges
+        links.enter()
+        .append('line')
+        .style('stroke', '#fff')
+        .attr('x1', function(d) {
+            return d.source.x;
+        })
+        .attr('y1', function(d) {
+            return d.source.y;
+        })
+        .attr('x2', function(d) {
+            return d.target.x;
+        })
+        .attr('y2', function(d) {
+            return d.target.y;
+        })
+        .transition()
+        .duration(transitionDuration)
+        .style('stroke', '#555')
+        .style('opacity', 1)
+        .each('end', function(){
+          d3.select(this).classed('link');
+        });
+
+    }, 2*transitionDuration);
 
     //animation of node class updates
     setTimeout(function() {
@@ -4486,6 +4513,6 @@ setTimeout(function() {
                 graph.nodes[d.index].mod = false;
             }); //remember that graph.nodes is the source, we're not updating to graph2.nodes like in the case of graph2.links
 
-    }, 2 * transitionDuration);
+    }, 3 * transitionDuration);
 
 }, 7000);
