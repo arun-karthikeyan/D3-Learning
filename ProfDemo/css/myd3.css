@@ -24,8 +24,8 @@ svg .link-active{
   stroke-opacity: 1;
 }
 
-svg .oracle{
-  stroke: #999999;
-  stroke-width: 2px;
+svg .oracle-select{
+  stroke: #555;
+  stroke-width: 3px;
   stroke-opacity: 1;
 }
